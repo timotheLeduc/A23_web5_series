@@ -1,0 +1,148 @@
+
+body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #141414;
+  padding-left: 10px;
+}
+
+#root {
+  background-color: #141414;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+
+.notation-etoiles {
+  font-size: 24px;
+}
+
+.etoile {
+  color: #ccc;
+}
+
+
+.etoile-remplie {
+  color: #e50914;
+}
+
+
+.etoile-moitie {
+  color: #e50914;
+  position: relative;
+  display: inline-block;
+}
+
+.etoile-moitie::before {
+  content: '\2605';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ccc;
+}
+
+
+.details-serie {
+  margin-top: 2rem;
+}
+
+.details-serie h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.details-serie p {
+  margin: 0.5rem 0;
+  font-size: 16px;
+}
+
+
+.episodes-button {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.episodes-button:hover {
+  background-color: #d30813;
+}
+
+.episodes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.episodes-list li {
+  font-size: 16px;
+  margin: 0.5rem 0;
+}
+/* Styles pour mettre en évidence la série sélectionnée */
+.carte-serie.selectionnee {
+  border: 2px solid #e50914; /* Bordure rouge pour la série sélectionnée */
+}
+
+.liste-series {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.carte-serie {
+  margin: 10px;
+  padding: 10px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.carte-serie:hover {
+  border-color: #e50914; /* Changement de couleur de la bordure au survol */
+}
+
+ svg {
+  color: #ff5757; /* Heart icon color */
+  margin-right: 5px;
+}
+.favoris p{
+  margin: 0;
+}
+
+
+/* ... Previous CSS styles ... */
+
+.details-profil {
+  display: flex;
+  align-items: center;
+  background-color: #d81620; /* Change to the desired shade of red */
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profil-image {
+  margin-right: 16px;
+}
+
+.profil-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profil-info {
+  flex-grow: 1;
+}
+
+.profil-info h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #141414;
+}

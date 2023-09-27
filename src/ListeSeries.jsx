@@ -1,42 +1,56 @@
 import React, { useState } from 'react';
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
 import DetailsSerie from './DetailsSerie';
+import { useNavigate } from 'react-router-dom';
 
-const ListeSeries = ({ seriesData, seriesDetailsData, addToFavorites, removeFromFavorites, favoriteSeries }) => {
+const ListeSeries = ({
+  seriesData,
+  addToFavorites,
+  removeFromFavorites,
+  favoriteSeries,
+  // isFavorite,
+  sectionType, 
+}) => {
   const [serieSelectionnee, setSerieSelectionnee] = useState(null);
+  const navigate = useNavigate();
 
-  // Function to select a series by ID
   const gererClicSerie = (serie) => {
     setSerieSelectionnee(serie);
-  };
+    console.log(serie);
 
+    
+  };
+  
   return (
     <div>
-      <h2>Séries Télévisées Tendances</h2>
+     {console.log(favoriteSeries)}
       <div className="liste-series">
         {seriesData.map((serie) => (
           <div key={serie.id}>
-            <div
-              className={`carte-serie ${serieSelectionnee === serie ? 'selectionnee' : ''}`}
-              onClick={() => gererClicSerie(serie)}
-            >
-              <img src={serie.poster} alt={serie.title} />
-              <h3>{serie.title}</h3>
-            </div>
-            {serieSelectionnee === serie && (
-              <div className="details-serie-selectionnee">
-                <DetailsSerie
-                  seriesDetails={seriesDetailsData[serie.id]}
-                  addToFavorites={addToFavorites} // Pass addToFavorites function
-                  removeFromFavorites={removeFromFavorites} // Pass removeFromFavorites function
-                />
+            <Link onClick={ gererClicSerie} to={`/${sectionType === 'trending' ? 'series-trending' : 'series-favorites'}/${serie.id}`}>
+              <div className={`carte-serie ${serieSelectionnee === serie ? 'selectionnee' : ''}`}>
+                <img src={serie.poster} alt={serie.title} />
+                <h3>{serie.title}</h3>
               </div>
-            )}
+            </Link>
           </div>
         ))}
       </div>
+
+      {serieSelectionnee && (
+        <div className="details-serie-selectionnee">
+          
+
+
+          {/* {isFavorite(serieSelectionnee) ? (
+            <button onClick={() => removeFromFavorites(serieSelectionnee)}>Enlever des favoris</button>
+          ) : (
+            <button onClick={() => addToFavorites(serieSelectionnee)}>Ajouter aux favoris</button>
+          )} */}
+        </div>
+      )}
     </div>
   );
 };
 
 export default ListeSeries;
-

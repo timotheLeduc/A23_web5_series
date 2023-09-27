@@ -1,64 +1,167 @@
-import React, { useState } from 'react';
-import DetailsSerie from './DetailsSerie';
-import Etoiles from './Etoiles';
-import Episodes from './Episodes';
+import React, { Children, useState } from 'react';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Navigation from './Navigation';
 import './App.css';
-import ListeSeries from './ListeSeries';
-import ListeSeriesFavorites from './ListeSeriesFavorites';
-
+import Trending from './Trending';
+import Favorites from './Favorites';
+import Login from './Login';
 import seriesDetailsData from './series_etape2_details.json';
 import seriesListData from './series_etape2_list.json';
-
-import { FaHeart } from 'react-icons/fa';
-
-import DetailsProfil from './DetailsProfil';
+import DetailsSerie from './DetailsSerie';
+import Layout from './Layout'; 
 
 function App() {
   const [showParagraph, setShowParagraph] = useState(false);
   const [favoriteSeries, setFavoriteSeries] = useState([]);
+  const [username, setUsername] = useState(null);
 
-  const username = 'Timy';
-
-  // Define the addToFavorites function
   const addToFavorites = (serie) => {
-    setFavoriteSeries((prevFavorites) => {
-      const newFavorites = [...prevFavorites, serie];
-      console.log(newFavorites); // Log the updated favoriteSeries array
-      return newFavorites;
-    });
+    if (!favoriteSeries.find((favorite) => favorite.id === serie.id)) {
+      setFavoriteSeries((prevFavorites) => {
+        const newFavorites = [...prevFavorites, serie];
+        console.log(newFavorites);
+        return newFavorites;
+      });
+    }
   };
 
-  // Define the removeFromFavorites function
   const removeFromFavorites = (serie) => {
     setFavoriteSeries((prevFavorites) => {
       const newFavorites = prevFavorites.filter((favorite) => favorite.id !== serie.id);
-      console.log(newFavorites); // Log the updated favoriteSeries array
+      console.log(newFavorites);
       return newFavorites;
     });
   };
+  const routes = [
+    {
+        path: "",
+        element: <Layout username={username} favoriteSeries={favoriteSeries}/>,
+        children: [
+            {
+                index: true,
+                element: <Navigate to={"/login"} replace/>
+            },
+            {
+                path: "login",
+                element: <Login setUsername={setUsername} />
+            },
+            {
+                path: "series-trending",
+                element: <Trending
+                seriesData={seriesListData}
+                seriesDetailsData={seriesDetailsData}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+                favoriteSeries={favoriteSeries}
+                // isFavorite={false}
+                sectionType = "trending"
+              />,
+              children: [
+                {
+                  path:":id",
+                  element:<DetailsSerie
+                  seriesData={seriesDetailsData} 
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                />
+                }
+              ]
+            },
+            {
+                path: "series-favorites",
+                element: <Favorites
+                seriesData={favoriteSeries}
+                seriesDetailsData={seriesDetailsData}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+                favoriteSeries={favoriteSeries}
+                isFavorite={true}
+                sectionType = "favorite"
+              />,
+              children: [
+                {
+                  path: ":id",
+                  element: (
+                    <DetailsSerie
+                      seriesData={seriesDetailsData}
+                      addToFavorites={addToFavorites}
+                      removeFromFavorites={removeFromFavorites}
+                      favoriteSeries={favoriteSeries} // Make sure favoriteSeries is passed here
+                    />
+                  )
+                }
+                
+              ]
+            }
+        ]
+    }
+];
 
-  return (
-    <div className="App">
-      <DetailsProfil
-        username={username}
-        favoriteSeries={favoriteSeries}
-      />
-      <ListeSeries
-        seriesData={seriesListData}
-        seriesDetailsData={seriesDetailsData}
-        addToFavorites={addToFavorites}
-        removeFromFavorites={removeFromFavorites} // Pass removeFromFavorites function
-      />
-      
-      <ListeSeriesFavorites
-        favoriteSeries={favoriteSeries}
-        seriesDetailsData={seriesDetailsData}
-        removeFromFavorites={removeFromFavorites} // Pass removeFromFavorites function
-      />
-    </div>
-  );
+return (
+  <RouterProvider router={createBrowserRouter(routes)} />
+);
 }
 
-
-
 export default App;
+{/* <Router>
+        <div className="App">
+          <Layout  children = {Children} favoriteSeries={favoriteSeries} username={username}> 
+          <Routes>
+
+          <Route>
+            <Route/>
+          </Route>
+
+            <Route path="" element={<Login setUsername={setUsername} />} />
+            <Route
+              path="series-trending"
+              element={
+                <Trending
+                  seriesData={seriesListData}
+                  seriesDetailsData={seriesDetailsData}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favoriteSeries={favoriteSeries}
+                  isFavorite={false}
+                />
+              }
+            />
+  
+            <Route
+              path=":id"
+              element={
+                <DetailsSerie
+                  seriesData={seriesDetailsData} 
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                />
+              }
+            />
+            <Route
+              path="series-favorites"
+              element={
+                <Favorites
+                  seriesData={favoriteSeries}
+                  seriesDetailsData={seriesDetailsData}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favoriteSeries={favoriteSeries}
+                  isFavorite={true}
+                />
+              }
+            />
+            
+            <Route
+              path="series-favorites/:id"
+              element={
+                <DetailsSerie
+                  seriesData={seriesDetailsData}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                />
+              }
+            />
+          </Routes>
+        </Layout>
+        </div>
+      </Router> */}

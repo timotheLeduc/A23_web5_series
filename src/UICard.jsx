@@ -6,7 +6,7 @@ const UICard = ({ title, year, poster }) => {
       <img src={poster} alt={title} />
       <h3>{title}</h3>
       <p>Année : {year}</p>
-      {/* Ajoutez d'autres informations de série ici */}
+    
     </div>
   );
 };

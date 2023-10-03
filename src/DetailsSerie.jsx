@@ -10,15 +10,17 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
   const seriesDetails = seriesData[id];
   console.log(seriesDetails);
   
-
+  const favoriteSeriesMatch = favoriteSeries.find(favoriteSerie => favoriteSerie.id === id);
+  console.log(favoriteSeriesMatch);
   if (!seriesDetails) {
     return <div>Series not found</div>;
   }
 
-  const [estFavori, setEstFavori] = useState(false);
-
+  // const [estFavori, setEstFavori] = useState(false);
+  const estFavori = !!favoriteSeriesMatch;
+  console.log(estFavori);
   const basculerFavori = () => {
-    setEstFavori(!estFavori);
+    
 
     if (estFavori) {
       

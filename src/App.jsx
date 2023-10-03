@@ -19,10 +19,12 @@ function App() {
     if (!favoriteSeries.find((favorite) => favorite.id === serie.id)) {
       setFavoriteSeries((prevFavorites) => {
         const newFavorites = [...prevFavorites, serie];
-        console.log(newFavorites);
+        console.log(prevFavorites);
+        favoriteSeries
         return newFavorites;
       });
     }
+    console.log(favoriteSeries.length);
   };
 
   const removeFromFavorites = (serie) => {
@@ -63,6 +65,8 @@ function App() {
                   seriesData={seriesDetailsData} 
                   addToFavorites={addToFavorites}
                   removeFromFavorites={removeFromFavorites}
+                  favoriteSeries={favoriteSeries}
+
                 />
                 }
               ]

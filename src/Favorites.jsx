@@ -1,6 +1,7 @@
 import React from 'react';
 import ListeSeries from './ListeSeries'; 
 import { Outlet } from 'react-router-dom';
+import ListeSeriesFavorites from './ListeSeriesFavorites';
 
 function Favorites({
   seriesData,
@@ -8,20 +9,21 @@ function Favorites({
   addToFavorites,
   removeFromFavorites,
   favoriteSeries,
+  sectionType
   // isFavorite
 }) {
   
   return (
     <div>
       <h2>Séries Favorites</h2>
-      <ListeSeries
+      <ListeSeriesFavorites
         seriesData={seriesData}
         seriesDetailsData={seriesDetailsData}
         addToFavorites={addToFavorites}
         removeFromFavorites={removeFromFavorites}
         favoriteSeries={favoriteSeries}
       
-        sectionType={"favorite"}
+        sectionType={sectionType}
       />
       
       

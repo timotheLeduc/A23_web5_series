@@ -18,13 +18,22 @@ const ListeSeries = ({
     setSerieSelectionnee(serie);
     console.log(serie);
 
-    
   };
+  // const [series, setSeries] = useState([]);
+  //   useEffect(() => {
+  //     const fetchSeries = async() => {
+  //       const resp = await fetch('http://localhost:3000/api/series/trending');
+  //       const data = await resp.json();
+  //       setSeries(data.series);
+  //       console.log(data.series);
+  //     };
+
+  //     fetchSeries();
+  //   }, []);
 
   
   return (
     <div>
-     {console.log(favoriteSeries)}
       <div className="liste-series">
         {seriesData.map((serie) => (
           <div key={serie.id}>

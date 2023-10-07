@@ -9,6 +9,7 @@ import seriesDetailsData from './series_etape2_details.json';
 import seriesListData from './series_etape2_list.json';
 import DetailsSerie from './DetailsSerie';
 import Layout from './Layout'; 
+import Recherche from "./Recherche";
 
 function App() {
   const [showParagraph, setShowParagraph] = useState(false);
@@ -39,6 +40,10 @@ function App() {
         path: "",
         element: <Layout username={username} favoriteSeries={favoriteSeries}/>,
         children: [
+            {
+              path: "recherche",
+              
+            },
             {
                 index: true,
                 element: <Navigate to={"/login"} replace/>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Etoiles from './Etoiles';
 import Episodes from './Episodes';
@@ -10,11 +10,13 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
   const seriesDetails = seriesData[id];
   console.log(seriesDetails);
   
-  const favoriteSeriesMatch = favoriteSeries.find(favoriteSerie => favoriteSerie.id === id);
+  const favoriteSeriesMatch = favoriteSeries.some(favoriteSerie => favoriteSerie.id === parseInt(id, 10));
   console.log(favoriteSeriesMatch);
   if (!seriesDetails) {
     return <div>Series not found</div>;
   }
+  const idsArray = favoriteSeries.map(show => show.id);
+  console.log(idsArray);
 
   // const [estFavori, setEstFavori] = useState(false);
   const estFavori = !!favoriteSeriesMatch;
@@ -31,36 +33,52 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
     }
   };
 
+  const [serie, setSerie] = useState();
+    useEffect(() => {
+      const fetchSerie = async () => {
+        const resp = await fetch(`http://localhost:3000/api/series/${id}`);
+        const data = await resp.json();
+        setSerie(data.serie);
+        
+      };
+
+      fetchSerie();
+    }, [id]);
+    console.log(serie)
+
+    if (!serie) {
+      return <div>Loading...</div>;
+    }
   return (
     <div>
-      {console.log(seriesData)}
-      <h1>{seriesDetails.title}</h1>
+      
+      <h1>{serie.title}</h1>
       <div>
-        <div>Année : {seriesDetails.year}</div>
-        <div>Tagline : {seriesDetails.tagline}</div>
-        <div>Vue d'ensemble : {seriesDetails.overview}</div>
-        <div>Réseau : {seriesDetails.network}</div>
-        <div>Pays : {seriesDetails.country}</div>
-        <div>Statut : {obtenirEtatLabel(seriesDetails.status)}</div>
+        <div>Année : {serie.year}</div>
+        <div>Tagline : {serie.tagline}</div>
+        <div>Vue d'ensemble : {serie.overview}</div>
+        <div>Réseau : {serie.network}</div>
+        <div>Pays : {serie.country}</div>
+        <div>Statut : {obtenirEtatLabel(serie.status)}</div>
         <div>Évaluation : </div>
-        <div>Langue : {seriesDetails.language}</div>
-        <div>Genres : {seriesDetails.genres.join(', ')}</div>
-        <div>Épisodes diffusés : {seriesDetails.aired_episodes}</div>
+        <div>Langue : {serie.language}</div>
+        <div>Genres : {serie.genres.join(', ')}</div>
+        <div>Épisodes diffusés : {serie.aired_episodes}</div>
 
         <div>
           <h2>Bande-annonce</h2>
-          <a href={seriesDetails.trailer} target="_blank" rel="noopener noreferrer">
+          <a href={serie.trailer} target="_blank" rel="noopener noreferrer">
             Voir la bande-annonce sur YouTube
           </a>
         </div>
-        <Etoiles evaluation={seriesDetails.rating} clickable={true} />
+        <Etoiles evaluation={serie.rating} clickable={true} />
         <div>
           <button onClick={basculerFavori}>
             {estFavori ? 'Enlever des favoris' : 'Ajouter aux favoris'}
           </button>
         </div>
-        {console.log(seriesDetails.seasons)}
-        <Episodes listeEpisodes={seriesDetails.seasons}/>
+        {console.log(serie.seasons)}
+        <Episodes listeEpisodes={serie.seasons}/>
       </div>
     </div>
   );

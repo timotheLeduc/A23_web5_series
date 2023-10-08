@@ -10,11 +10,30 @@ import seriesListData from './series_etape2_list.json';
 import DetailsSerie from './DetailsSerie';
 import Layout from './Layout'; 
 import Recherche from "./Recherche";
+import { useStorage } from "./hooks/useStorage";
+import { useEffect } from 'react';
 
 function App() {
-  const [showParagraph, setShowParagraph] = useState(false);
+ 
   const [favoriteSeries, setFavoriteSeries] = useState([]);
   const [username, setUsername] = useState(null);
+  const { saveToStorage, getFromStorage } = useStorage("posts-");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const savedUser = getFromStorage("username");
+    console.log("Saved User from localStorage:", savedUser);
+    if (savedUser) {
+      setUsername(savedUser);
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    // Show loading spinner or component while useEffect is running
+    return null;
+  }
+  
 
   const addToFavorites = (serie) => {
     if (!favoriteSeries.find((favorite) => favorite.id === serie.id)) {
@@ -37,21 +56,25 @@ function App() {
   };
   const routes = [
     {
-        path: "",
-        element: <Layout username={username} favoriteSeries={favoriteSeries}/>,
+      path: "login",
+      element: <Login setUsername={setUsername} />
+    },
+    {
+      path: "",
+      element: username ? (
+        <Layout username={username} favoriteSeries={favoriteSeries} />
+      ) : (
+        <Navigate to="/login" />
+      ),
         children: [
             {
               path: "recherche",
               
             },
-            {
-                index: true,
-                element: <Navigate to={"/login"} replace/>
-            },
-            {
-                path: "login",
-                element: <Login setUsername={setUsername} />
-            },
+            // {
+            //     index: true,
+            //     element: <Navigate to={"/login"} replace/>
+            // },
             {
                 path: "series-trending",
                 element: <Trending

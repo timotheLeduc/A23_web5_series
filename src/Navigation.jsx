@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Navigation({ setUsername }) {
   const handleLogout = () => {
-  
+    
     setUsername("Guest");
   };
 

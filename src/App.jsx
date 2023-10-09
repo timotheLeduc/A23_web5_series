@@ -20,11 +20,20 @@ function App() {
   const { saveToStorage, getFromStorage } = useStorage("posts-");
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     const savedUser = getFromStorage("username");
     console.log("Saved User from localStorage:", savedUser);
     if (savedUser) {
       setUsername(savedUser);
+    }
+    setLoading(false);
+  }, []);
+  useEffect(() => {
+    const savedLikes = getFromStorage("likes");
+    console.log("Saved Likes from localStorage:", savedLikes);
+    if (savedLikes) {
+      setFavoriteSeries(savedLikes);
     }
     setLoading(false);
   }, []);
@@ -41,6 +50,7 @@ function App() {
         const newFavorites = [...prevFavorites, serie];
         console.log(prevFavorites);
         favoriteSeries
+        
         return newFavorites;
       });
     }

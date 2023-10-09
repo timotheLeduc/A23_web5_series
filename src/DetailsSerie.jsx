@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Etoiles from './Etoiles';
 import Episodes from './Episodes';
+
+import { useStorage } from "./hooks/useStorage";
+
 const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favoriteSeries }) => {
 // Je voulais passer favorites series et regarder si id est dans le array mais il est undefined meme si il l<est pas dans les autres composantes
   const { id } = useParams();
@@ -21,17 +24,41 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
   // const [estFavori, setEstFavori] = useState(false);
   const estFavori = !!favoriteSeriesMatch;
   console.log(estFavori);
-  const basculerFavori = () => {
+  // const basculerFavori = () => {
     
 
-    if (estFavori) {
+  //   if (estFavori) {
       
+  //     removeFromFavorites(seriesDetails);
+  //   } else {
+      
+  //     addToFavorites(seriesDetails);
+  //   }
+  // };
+  const {saveToStorage, getFromStorage, removeFromStorage} = useStorage("posts-");
+  
+  const basculerFavori = () => {
+    let newFavoriteSeries;
+  
+    if (estFavori) {
+      // Si la série est déjà un favori, la retirer des favoris
+      newFavoriteSeries = favoriteSeries.filter((favorite) => favorite.id !== parseInt(id, 10));
+      removeFromStorage("likes", parseInt(id, 10));
       removeFromFavorites(seriesDetails);
     } else {
-      
+      // Sinon, l'ajouter aux favoris
+      newFavoriteSeries = [...favoriteSeries, seriesDetails];
+      saveToStorage("likes", newFavoriteSeries);
       addToFavorites(seriesDetails);
     }
+  
+    // Mettez à jour le state local avec les nouveaux favoris
+    // setFavoriteSeries(newFavoriteSeries);
+  
+    // Sauvegarder les favoris dans localStorage
+    // saveToStorage("favoriteSeries", newFavoriteSeries);
   };
+  
 
   const [serie, setSerie] = useState();
     useEffect(() => {

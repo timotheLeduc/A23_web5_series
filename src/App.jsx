@@ -77,10 +77,23 @@ function App() {
         <Navigate to="/login" />
       ),
         children: [
-            {
-              path: "recherche",
-              
-            },
+          {
+            path: "recherche",
+            element: <Recherche sectionType={"trending"} />,
+            children: [
+              {
+                path: ":id",
+                element: (
+                  <DetailsSerie
+                    seriesData={seriesDetailsData} // Assurez-vous de passer les données de la série ici
+                    addToFavorites={addToFavorites}
+                    removeFromFavorites={removeFromFavorites}
+                    favoriteSeries={favoriteSeries} // Passez favoriteSeries ici
+                  />
+                ),
+              },
+            ],
+          },
             // {
             //     index: true,
             //     element: <Navigate to={"/login"} replace/>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ListeSeries from './ListeSeries';
-const Recherche = () => {
+const Recherche = ({sectionType}) => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -25,7 +25,7 @@ const Recherche = () => {
 
   return (
     <div>
-      <h2>Recherche de Séries</h2>
+      <h3>Recherche de Séries</h3>
       <input
         type="text"
         value={query}
@@ -36,19 +36,11 @@ const Recherche = () => {
 
       {console.log(searchResults)}
       {searchResults.length > 0 ? (
-        <ul>
-          {searchResults.map((serie) => (
-            <li key={serie.id}>
-              <h3>{serie.title}</h3>
-              <img src={serie.poster} alt={serie.title} />
-
-            </li>
-          ))}
-        </ul>
+        <ListeSeries seriesData={searchResults} sectionType={sectionType} />
       ) : (
         <p>Aucun résultat trouvé.</p>
       )}
-      <ListeSeries seriesData={searchResults} />
+      
     </div>
     
   );

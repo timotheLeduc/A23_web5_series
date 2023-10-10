@@ -3,6 +3,7 @@ body, h1, p {
   margin: 0;
   padding: 0;
 }
+
 body{
   background-color: #141414;
   padding-left: 10px;
@@ -210,6 +211,22 @@ body{
   cursor: pointer;
 }
 
-.login-button:hover {
-  background-color: #d30813; /* Darker red on hover */
+
+
+.login-input.error {
+  color: #ff0000; /* Couleur du texte en rouge */
+  background-color: #ffe6e6; /* Fond du champ de texte en rouge pâle */
+  border-color: #ff0000; /* Bordure du champ de texte en rouge */
 }
+h2 {
+  font-size: 36px;
+}
+input:focus {
+  outline: 2px solid #e50914; /* Couleur de mise en évidence du focus */
+}
+
+.navigation-links .active-link {
+  color: #e50914; /* Couleur du lien actif */
+  font-weight: bold; /* Police en gras pour le lien actif (facultatif) */
+}
+

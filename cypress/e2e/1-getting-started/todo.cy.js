@@ -34,4 +34,8 @@ describe('User Authentication and Navigation', () => {
     // Check if the username is now 'Guest'
     cy.contains('h2', 'Guest').should('be.visible');
   });
+
+  
+  
+  
 });

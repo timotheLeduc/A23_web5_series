@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ListeSeries from './ListeSeries';
 import DetailsSerie from './DetailsSerie';
-
+import { Outlet } from 'react-router-dom';
 const Recherche = ({ sectionType }) => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -52,6 +52,10 @@ const Recherche = ({ sectionType }) => {
           favoriteSeries={favoriteSeries}
         />
       )}
+      <div>
+        <Outlet/>
+      </div>
+
     </div>
   );
 };

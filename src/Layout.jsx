@@ -18,7 +18,7 @@ const Layout = ({ username, favoriteSeries }) => {
       <Navigation />
       <DetailsProfil username={username} favoriteSeries={favoriteSeries} />
       <Recherche sectionType={"recherche"}/>  
-      <Outlet/>
+      
       <footer>
         <h3>Info plus ou moins nécessaire</h3>
       </footer>

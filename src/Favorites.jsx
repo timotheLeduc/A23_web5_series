@@ -42,7 +42,9 @@ function Favorites({
         sectionType={sectionType}
       />
       
-      
+      <div>
+        <Outlet/>
+      </div>
       
     </div>
   );

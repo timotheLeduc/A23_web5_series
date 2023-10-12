@@ -17,7 +17,7 @@ const Layout = ({ username, favoriteSeries }) => {
       <h2>Netflex</h2>
       <Navigation />
       <DetailsProfil username={username} favoriteSeries={favoriteSeries} />
-      <Recherche sectionType={"trending"} />  
+      <Recherche sectionType={"recherche"}/>  
       <Outlet/>
       <footer>
         <h3>Info plus ou moins nécessaire</h3>

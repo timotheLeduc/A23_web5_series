@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import ListeSeries from './ListeSeries';
-const Recherche = ({sectionType}) => {
+import DetailsSerie from './DetailsSerie';
+
+const Recherche = ({ sectionType }) => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedSerie, setSelectedSerie] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/series/search?q=${query}`);
         const data = await response.json();
-        setSearchResults(data.series); // Assuming the series data is in 'data.series' property
+        setSearchResults(data.series);
         console.log(data);
       } catch (error) {
         console.error('Error fetching search results:', error);
@@ -19,9 +22,13 @@ const Recherche = ({sectionType}) => {
     if (query !== '') {
       fetchData();
     } else {
-      setSearchResults([]); // Clear the search results when the query is empty
+      setSearchResults([]);
     }
   }, [query]);
+
+  const handleSerieClick = (serie) => {
+    setSelectedSerie(serie);
+  };
 
   return (
     <div>
@@ -32,17 +39,20 @@ const Recherche = ({sectionType}) => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Rechercher des séries..."
       />
-      <button onClick={useEffect}>Rechercher</button>
+      <button>Rechercher</button>
 
       {console.log(searchResults)}
-      {searchResults.length > 0 ? (
-        <ListeSeries seriesData={searchResults} sectionType={sectionType} />
-      ) : (
-        <p>Aucun résultat trouvé.</p>
+      <ListeSeries seriesData={searchResults} sectionType={sectionType} onSerieClick={handleSerieClick} />
+
+      {selectedSerie && (
+        <DetailsSerie
+          seriesData={selectedSerie}
+          addToFavorites={addToFavorites}
+          removeFromFavorites={removeFromFavorites}
+          favoriteSeries={favoriteSeries}
+        />
       )}
-      
     </div>
-    
   );
 };
 

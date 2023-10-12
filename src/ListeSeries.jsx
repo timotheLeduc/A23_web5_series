@@ -15,6 +15,7 @@ const ListeSeries = ({
   const navigate = useNavigate();
 
   const gererClicSerie = (serie) => {
+    console.log(sectionType);
     setSerieSelectionnee(serie);
     console.log(serie);
 
@@ -37,7 +38,15 @@ const ListeSeries = ({
       <div className="liste-series">
         {seriesData.map((serie) => (
           <div key={serie.id}>
-            <Link onClick={ gererClicSerie} to={`/${sectionType === 'trending' ? 'series-trending' : 'series-favorites'}/${serie.id}`}>
+            <Link
+                onClick={gererClicSerie}
+                to={
+                  sectionType === 'recherche'
+                    ? '/recherche' // Rediriger vers la page de recherche si sectionType est "recherche"
+                    : `/${sectionType === 'trending' ? 'series-trending' : 'series-favorites'}/${serie.id}`
+                }
+              >
+                
               <div className={`carte-serie ${serieSelectionnee === serie ? 'selectionnee' : ''}`}>
                 <img src={serie.poster} alt={serie.title} />
                 <h3>{serie.title}</h3>
@@ -46,6 +55,7 @@ const ListeSeries = ({
           </div>
         ))}
       </div>
+
 
       {serieSelectionnee && (
         <div className="details-serie-selectionnee">

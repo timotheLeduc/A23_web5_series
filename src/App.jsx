@@ -79,16 +79,16 @@ function App() {
         children: [
           {
             path: "recherche",
-            element: <Recherche sectionType={"trending"} />,
+            element: <Recherche sectionType={"recherche"} favoriteSeries={favoriteSeries} />,
             children: [
               {
                 path: ":id",
                 element: (
                   <DetailsSerie
-                    seriesData={seriesDetailsData} // Assurez-vous de passer les données de la série ici
+                    seriesData={seriesDetailsData} 
                     addToFavorites={addToFavorites}
                     removeFromFavorites={removeFromFavorites}
-                    favoriteSeries={favoriteSeries} // Passez favoriteSeries ici
+                    favoriteSeries={favoriteSeries} 
                   />
                 ),
               },

@@ -32,7 +32,7 @@ function Trending({
 
   return (
     <div>
-      <h2>Trending TV Series</h2>
+      <h2>Séries Populaires</h2>
       <ListeSeries
         seriesData={series}
         seriesDetailsData={seriesDetailsData}

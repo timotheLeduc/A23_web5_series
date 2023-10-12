@@ -53,18 +53,6 @@ const ListeSeries = ({
       </div>
 
 
-      {serieSelectionnee && (
-        <div className="details-serie-selectionnee">
-          
-
-
-          {/* {isFavorite(serieSelectionnee) ? (
-            <button onClick={() => removeFromFavorites(serieSelectionnee)}>Enlever des favoris</button>
-          ) : (
-            <button onClick={() => addToFavorites(serieSelectionnee)}>Ajouter aux favoris</button>
-          )} */}
-        </div>
-      )}
     </div>
   );
 };

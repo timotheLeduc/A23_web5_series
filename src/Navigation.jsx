@@ -23,17 +23,17 @@ function Navigation({ setUsername }) {
       <ul className="navigation-links">
         <li>
           <Link to="/" className={currentPath === '/' ? 'active-link' : ''}>
-            Home
+            Page Principale
           </Link>
         </li>
         <li>
           <Link to="/series-trending" className={currentPath === '/series-trending' ? 'active-link' : ''}>
-            Trending
+            Series Populaires
           </Link>
         </li>
         <li>
           <Link to="/series-favorites" className={currentPath === '/series-favorites' ? 'active-link' : ''}>
-            Favorites
+            Series Favorites
           </Link>
         </li>
         <li>
@@ -43,7 +43,7 @@ function Navigation({ setUsername }) {
         </li>
         <li>
           <Link to="/login" onClick={handleLogout}>
-            Logout
+            Déconnexion
           </Link>
         </li>
       </ul>

@@ -1,43 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Etoiles = ({ evaluation, clickable }) => {
+
+const Etoiles = ({ evaluation }) => {
   const [userRating, setUserRating] = useState(0);
 
-  const numberOfStars = evaluation / 2;
+  useEffect(() => {
+    setUserRating(evaluation / 2); // Remplit les étoiles basées sur le rating initial
+  }, [evaluation]);
 
-  const etoiles = [];
+  const etoilesRemplies = [];
+  const etoilesCliquables = [];
 
   for (let i = 1; i <= 5; i++) {
-    const starClass = i <= numberOfStars ? "etoile-remplie" : "etoile";
+    const starClassRemplies = i <= evaluation / 2 ? "etoile-remplie" : "etoile";
+    const starClassCliquables = i <= userRating ? "etoile-remplie" : "etoile";
 
-    if (clickable) {
-      etoiles.push(
-        <span
-          key={i}
-          className={i <= userRating ? "etoile-remplie" : "etoile"}
-          onClick={() => setUserRating(i)}
-        >
-          &#9733;
-        </span>
-      );
-    } else {
-      etoiles.push(
-        <span
-          key={i}
-          className={starClass}
-        >
-          &#9733;
-        </span>
-      );
-    }
+    etoilesRemplies.push(
+      <span key={i} className={starClassRemplies}>
+        &#9733;
+      </span>
+    );
+
+    etoilesCliquables.push(
+      <span
+        key={i}
+        className={starClassCliquables}
+        onClick={() => setUserRating(i)}
+      >
+        &#9733;
+      </span>
+    );
   }
 
   return (
     <div>
-      <span className="notation-etoiles">
-        {etoiles}
-      </span>
-      {clickable ? <p>Votre évaluation : {userRating} étoiles</p> : null}
+      <div>
+        <span className="notation-etoiles">{etoilesRemplies}</span>
+        <p>Évaluation d'origine : {Math.floor(evaluation / 2)}</p>
+
+      </div>
+      <div>
+        <span className="notation-etoiles">{etoilesCliquables}</span>
+        <p>Votre évaluation : {Math.floor(userRating)}</p>
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 const Recherche = ({ sectionType }) => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedSerie, setSelectedSerie] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,14 +44,7 @@ const Recherche = ({ sectionType }) => {
       {console.log(searchResults)}
       <ListeSeries seriesData={searchResults} sectionType={sectionType} onSerieClick={handleSerieClick} />
 
-      {selectedSerie && (
-        <DetailsSerie
-          seriesData={selectedSerie}
-          addToFavorites={addToFavorites}
-          removeFromFavorites={removeFromFavorites}
-          favoriteSeries={favoriteSeries}
-        />
-      )}
+      
       <div>
         <Outlet/>
       </div>

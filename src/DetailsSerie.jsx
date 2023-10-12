@@ -16,7 +16,7 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
   const favoriteSeriesMatch = favoriteSeries.some(favoriteSerie => favoriteSerie.id === parseInt(id, 10));
   console.log(favoriteSeriesMatch);
   if (!seriesDetails) {
-    return <div>Series not found</div>;
+    return <div>Serie pas trouvée</div>;
   }
   const idsArray = favoriteSeries.map(show => show.id);
   console.log(idsArray);
@@ -80,6 +80,7 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
     <div>
       
       <h1>{serie.title}</h1>
+      {console.log(serie)}
       <div>
         <div>Année : {serie.year}</div>
         <div>Tagline : {serie.tagline}</div>
@@ -91,14 +92,27 @@ const DetailsSerie = ({ seriesData, addToFavorites, removeFromFavorites, favorit
         <div>Langue : {serie.language}</div>
         <div>Genres : {serie.genres.join(', ')}</div>
         <div>Épisodes diffusés : {serie.aired_episodes}</div>
+        <div>Évaluations : <Etoiles evaluation={serie.rating} clickable={true} /></div>
 
-        <div>
-          <h2>Bande-annonce</h2>
-          <a href={serie.trailer} target="_blank" rel="noopener noreferrer">
-            Voir la bande-annonce sur YouTube
-          </a>
+        <div
+          style={{
+            width: '50%',
+            height: '300px', 
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundImage: `url(${serie.backdrop})`,
+            cursor: 'pointer', 
+          }}
+          onClick={() => {
+            window.open(serie.trailer, '_blank'); 
+          }}
+        >
+          <h2 style={{ textAlign: 'center', paddingTop: '150px', color: '#fff' }}>
+            Cliquez pour regarder la bande-annonce
+          </h2>
         </div>
-        <Etoiles evaluation={serie.rating} clickable={true} />
+
+        
         <div>
           <button onClick={basculerFavori}>
             {estFavori ? 'Enlever des favoris' : 'Ajouter aux favoris'}

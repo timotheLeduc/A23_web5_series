@@ -67,7 +67,7 @@ function App() {
   const routes = [
     {
       path: "login",
-      element: <Login setUsername={setUsername} />
+      element: <Login setUsername={setUsername} />,
     },
     {
       path: "",
@@ -76,81 +76,85 @@ function App() {
       ) : (
         <Navigate to="/login" />
       ),
-        children: [
-          {
-            path: "recherche",
-            element: <Recherche sectionType={"recherche"} favoriteSeries={favoriteSeries} />,
-            children: [
-              {
-                path: ":id",
-                element: (
-                  <DetailsSerie
-                    seriesData={seriesDetailsData} 
-                    addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites}
-                    favoriteSeries={favoriteSeries} 
-                  />
-                ),
-              },
-            ],
-          },
-            // {
-            //     index: true,
-            //     element: <Navigate to={"/login"} replace/>
-            // },
+      children: [
+        {
+          path: "recherche",
+          element: <Recherche sectionType={"recherche"} favoriteSeries={favoriteSeries} />,
+          children: [
             {
-                path: "series-trending",
-                element: <Trending
-                seriesData={seriesListData}
-                seriesDetailsData={seriesDetailsData}
-                addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
-                favoriteSeries={favoriteSeries}
-                // isFavorite={false}
-                sectionType = "trending"
-              />,
-              children: [
-                {
-                  path:":id",
-                  element:<DetailsSerie
-                  seriesData={seriesDetailsData} 
+              path: ":id",
+              element: (
+                <DetailsSerie
+                  seriesData={seriesDetailsData}
                   addToFavorites={addToFavorites}
                   removeFromFavorites={removeFromFavorites}
                   favoriteSeries={favoriteSeries}
-
                 />
-                }
-              ]
+              ),
             },
+          ],
+        },
+        {
+          path: "series-trending",
+          element: (
+            <Trending
+              seriesData={seriesListData}
+              seriesDetailsData={seriesDetailsData}
+              addToFavorites={addToFavorites}
+              removeFromFavorites={removeFromFavorites}
+              favoriteSeries={favoriteSeries}
+              sectionType="trending"
+            />
+          ),
+          children: [
             {
-                path: "series-favorites",
-                element: <Favorites
-                seriesData={favoriteSeries}
-                seriesDetailsData={seriesDetailsData}
-                addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
-                favoriteSeries={favoriteSeries}
-                isFavorite={true}
-                sectionType = "favorite"
-              />,
-              children: [
-                {
-                  path: ":id",
-                  element: (
-                    <DetailsSerie
-                      seriesData={seriesDetailsData}
-                      addToFavorites={addToFavorites}
-                      removeFromFavorites={removeFromFavorites}
-                      favoriteSeries={favoriteSeries} // Make sure favoriteSeries is passed here
-                    />
-                  )
-                }
-                
-              ]
-            }
-        ]
-    }
-];
+              path: ":id",
+              element: (
+                <DetailsSerie
+                  seriesData={seriesDetailsData}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favoriteSeries={favoriteSeries}
+                />
+              ),
+            },
+          ],
+        },
+        {
+          path: "series-favorites",
+          element: (
+            <Favorites
+              seriesData={favoriteSeries}
+              seriesDetailsData={seriesDetailsData}
+              addToFavorites={addToFavorites}
+              removeFromFavorites={removeFromFavorites}
+              favoriteSeries={favoriteSeries}
+              isFavorite={true}
+              sectionType="favorite"
+            />
+          ),
+          children: [
+            {
+              path: ":id",
+              element: (
+                <DetailsSerie
+                  seriesData={seriesDetailsData}
+                  addToFavorites={addToFavorites}
+                  removeFromFavorites={removeFromFavorites}
+                  favoriteSeries={favoriteSeries}
+                />
+              ),
+            },
+          ],
+        },
+        {
+          path: "*",
+          element: <Navigate to="series-trending" />,
+        },
+      ],
+    },
+  ];
+  
 
 return (
   <RouterProvider router={createBrowserRouter(routes)} />

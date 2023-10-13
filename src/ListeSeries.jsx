@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route, Outlet, Link, useNavigate  } from 'react-router-dom';
 import DetailsSerie from './DetailsSerie';
-import { useNavigate } from 'react-router-dom';
+
 
 const ListeSeries = ({
   seriesData,
